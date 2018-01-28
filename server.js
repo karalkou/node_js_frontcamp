@@ -1,4 +1,5 @@
 const path        = require('path');
+const fs          = require('fs');
 const express     = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const bodyParser  = require('body-parser');
@@ -12,7 +13,10 @@ const port = 8000;
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+// create a write stream (in append mode)
+let accessLogStream = fs.createWriteStream(path.join(__dirname, 'app/access.log'), {flags: 'a'});
+app.use(logger('combined', {stream: accessLogStream}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 MongoClient.connect(db.url, (err, database) => {
