@@ -5,6 +5,7 @@ const BlogSchema = new Schema({
     title: String,
     author: String,
     views: Number,
+    body: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
