@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const BlogModel = require('../models/blog');
 const remoteDbUrl = require('./../../config/db').url;
 
-mongoose.connect(remoteDbUrl);
+mongoose.connect(remoteDbUrl)
+    .then(() =>  console.log('connection succesful'))
+    .catch((err) => console.error(err));
 const db = mongoose.connection;
 
 /**
