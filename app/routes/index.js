@@ -1,6 +1,9 @@
-const noteRoutes = require('./note_routes');
+const express = require('express');
+const router = express.Router();
 
-module.exports = function(app, db) {
-    noteRoutes(app, db);
-    // Other routes handlers will be here later
-};
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    res.render('index', { title: 'Keep calm and be Expressed' });
+});
+
+module.exports = router;
