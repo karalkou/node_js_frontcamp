@@ -4,6 +4,9 @@ const express    = require('express');
 const bodyParser = require('body-parser');
 const logger     = require('morgan');
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 const index = require('./app/routes/index');
 const blogs = require('./app/routes/blogs_routes');
 
@@ -24,8 +27,10 @@ app.listen(port, () => {
     console.log('We are live on ' + port);
 });
 
+
 app.use('/', index);
 app.use('/blogs', blogs);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
