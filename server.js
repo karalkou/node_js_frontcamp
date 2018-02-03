@@ -68,7 +68,8 @@ app.use(function(err, req, res, next) {
     const errStatus = err.status;
     res.locals.message = err.message;
     res.locals.error = {
-        status: errStatus
+        ...err,
+        stack: ''
     };
 
     // render the error page

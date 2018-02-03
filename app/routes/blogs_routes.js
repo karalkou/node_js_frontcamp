@@ -3,16 +3,38 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const BlogModel = require('../models/blog');
 const remoteDbUrl = require('./../../config/db').url;
+const auth = require("../controllers/AuthController.js");
 
 mongoose.connect(remoteDbUrl)
     .then(() =>  console.log('connection succesful'))
     .catch((err) => console.error(err));
 const db = mongoose.connection;
 
+/*---------------------------------------------------------*/
+/*
+ * Check the request if the user is authenticated.
+ * Return an error message if not, otherwise keep going :)
+ */
+function ensureLoggedIn() {
+    return function(req, res, next) {
+        // isAuthenticated is set by `deserializeUser()`
+        if (!req.isAuthenticated || !req.isAuthenticated()) {
+            res.status(401).send({
+                success: false,
+                message: 'You need to be authenticated to access this page!'
+            });
+            // res.redirect('/')
+        } else{
+            next()
+        }
+    }
+}
+/*---------------------------------------------------------*/
+
 /**
  * GETs blogs in database.
  */
-router.get('/', (req, res) => {
+router.get('/', ensureLoggedIn(), (req, res) => {
     BlogModel.find({}).then(blogs => {
         res.send(blogs);
     });
