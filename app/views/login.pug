@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    form(role='form', action='/login', method='post')
+        h2 Please sign in
+        label(for='inputEmail')
+        div
+            input(type='text', name='username', id='inputEmail', placeholder='Username', required, autofocus)
+        div
+            input(type='password', name='password', id='inputPassword', placeholder='Password')
+        button(type='submit') LOGIN

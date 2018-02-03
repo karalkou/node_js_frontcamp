@@ -1,7 +1,18 @@
 doctype html
 html
-  head
-    title= title
-    //link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title= title
+        //link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        ul
+        if (!user)
+            li
+                a(href='/login') Login
+            li
+                a(href='/register') Register
+        if (user)
+            li
+                a Welcome #{user.name}
+            li
+                a(href='/logout') Logout
+        block content

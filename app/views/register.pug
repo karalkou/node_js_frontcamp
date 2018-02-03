@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    form(role='form', action="/register", method="post")
+        h2 Sign Up here
+        div
+            input(type='text', name="name", placeholder='Your Name')
+        div
+            input(type='text', name="username", placeholder='Your Username')
+        div
+            input(type='password', name="password", placeholder='Your Password')
+        button(type='submit') Sign Up
