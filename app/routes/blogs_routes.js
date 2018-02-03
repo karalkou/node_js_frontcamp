@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const BlogModel = require('../models/blog');
+const remoteDbUrl = require('./../../config/db').url;
 
-mongoose.connect('mongodb://localhost:27017/procrm_site');
+mongoose.connect(remoteDbUrl);
 const db = mongoose.connection;
 
 /**
