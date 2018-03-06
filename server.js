@@ -1,9 +1,9 @@
-const path         = require('path');
-const fs           = require('fs');
-const express      = require('express');
-const bodyParser   = require('body-parser');
+const path = require('path');
+const fs = require('fs');
+const express = require('express');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const logger       = require('morgan');
+const logger = require('morgan');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy; // Username and password authentication strategy for Passport and Node.js.
@@ -11,7 +11,7 @@ const LocalStrategy = require('passport-local').Strategy; // Username and passwo
 const index = require('./app/routes/index');
 const blogs = require('./app/routes/blogs_routes');
 
-const app  = express();
+const app = express();
 const port = 8000;
 
 // view engine setup
@@ -19,8 +19,8 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'pug');
 
 // create a write stream (in append mode)
-let accessLogStream = fs.createWriteStream(path.join(__dirname, 'app/access.log'), {flags: 'a'});
-app.use(logger('combined', {stream: accessLogStream}));
+let accessLogStream = fs.createWriteStream(path.join(__dirname, 'app/access.log'), { flags: 'a' });
+app.use(logger('combined', { stream: accessLogStream }));
 
 // Middlewares, which should be defined before passport:
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,7 +49,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     let err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -66,7 +66,7 @@ app.use(function(req, res, next) {
     res.render('error');
 });*/
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     const errStatus = err.status;
     res.locals.message = err.message;
     res.locals.error = {
