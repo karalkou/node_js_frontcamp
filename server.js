@@ -22,6 +22,7 @@ app.set('view engine', 'pug');
 let accessLogStream = fs.createWriteStream(path.join(__dirname, 'app/access.log'), {flags: 'a'});
 app.use(logger('combined', {stream: accessLogStream}));
 
+// Middlewares, which should be defined before passport:
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(require('express-session')({
@@ -29,6 +30,7 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
+// Passport:
 app.use(passport.initialize());
 app.use(passport.session());
 
