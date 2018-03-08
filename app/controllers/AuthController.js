@@ -50,6 +50,14 @@ userController.login = function (req, res) {
 // Post login
 userController.doLogin = function (req, res, next) {
     console.log('*** doLogin');
+    passport.authenticate('local')(req, res, function () {
+        res.redirect('/');
+    });
+};
+
+// Post login for react app
+userController.doLoginReact = function (req, res, next) {
+    console.log('*** doLoginReact');
     passport.authenticate(
         'local',
         function (err, user, info) {

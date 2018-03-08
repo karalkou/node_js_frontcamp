@@ -18,6 +18,9 @@ router.get('/login', auth.login);
 // route for login action
 router.post('/login', auth.doLogin);
 
+// route for login action for react app
+router.post('/api/login', auth.doLoginReact);
+
 // route for logout action
 router.get('/logout', auth.logout);
 
