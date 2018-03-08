@@ -12,7 +12,7 @@ const index = require('./app/routes/index');
 const blogs = require('./app/routes/blogs_routes');
 
 const app = express();
-const port = 8000;
+const port = 9000;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -31,22 +31,22 @@ app.use(require('express-session')({
     saveUninitialized: false
 }));
 // Passport:
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.listen(port, () => {
-    console.log('We are live on ' + port);
-});
-
-
-app.use('/', index);
-app.use('/blogs', blogs);
+app.use(passport.initialize()); // which is responsible for bootstrapping the Passport module
+app.use(passport.session()); //which is using the Express session to keep track of your user’s session
 
 // passport configuration
 const User = require('./app/models/User');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
+app.listen(port, () => {
+    console.log('We are live on ' + port);
+});
+
+app.use('/', index);
+app.use('/blogs', blogs);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
