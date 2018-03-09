@@ -47,6 +47,7 @@ app.listen(port, () => {
 
 app.use('/', index);
 app.use('/blogs', blogs);
+app.use('/api/blogs', blogs);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
