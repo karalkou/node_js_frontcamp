@@ -12,6 +12,9 @@ router.get('/register', auth.register);
 // route for register action
 router.post('/register', auth.doRegister);
 
+// route for register action for react app
+router.post('/api/register', auth.doRegisterReact);
+
 // route to login page
 router.get('/login', auth.login);
 

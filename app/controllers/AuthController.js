@@ -41,6 +41,46 @@ userController.doRegister = function (req, res) {
     );
 };
 
+// Post registration for react app
+userController.doRegisterReact = function (req, res, next) {
+    console.log('*** doRegisterReact');
+    User.register(
+        new User({
+            username: req.body.username,
+            name: req.body.name
+        }),
+        req.body.password,
+        function (err, user, info) {
+            if (err) {
+                return res.json({ success: false, message: loginErr });
+            }
+
+            /* passport.authenticate('local')(req, res, function () {
+                res.redirect('/');
+            }); */
+
+            passport.authenticate(
+                'local',
+                function (err, user, info) {
+
+                    if (err) return next(err);
+
+                    if (!user) {
+                        return res.json({ success: false, message: info.message })
+                    }
+
+                    req.logIn(user, loginErr => {
+                        if (loginErr) {
+                            return res.json({ success: false, message: loginErr })
+                        }
+                        return res.json({ success: true, message: "authentication succeeded" })
+                    })
+                }
+            )(req, res, next);
+        }
+    );
+};
+
 // Go to login page
 userController.login = function (req, res) {
     console.log('*** login');
