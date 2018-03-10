@@ -44,41 +44,28 @@ userController.doRegister = function (req, res) {
 // Post registration for react app
 userController.doRegisterReact = function (req, res, next) {
     console.log('*** doRegisterReact');
-    User.register(
-        new User({
-            username: req.body.username,
-            name: req.body.name
-        }),
-        req.body.password,
-        function (err, user, info) {
-            if (err) {
-                return res.json({ success: false, message: loginErr });
-            }
-
-            /* passport.authenticate('local')(req, res, function () {
-                res.redirect('/');
-            }); */
-
-            passport.authenticate(
-                'local',
-                function (err, user, info) {
-
-                    if (err) return next(err);
-
-                    if (!user) {
-                        return res.json({ success: false, message: info.message })
-                    }
-
-                    req.logIn(user, loginErr => {
-                        if (loginErr) {
-                            return res.json({ success: false, message: loginErr })
-                        }
-                        return res.json({ success: true, message: "authentication succeeded" })
-                    })
-                }
-            )(req, res, next);
+    User.findOne({ username: req.body.username }, (err, user) => {
+        // is email address already in use?
+        if (user) {
+            res.json({ success: false, message: "Email is already in use" });
+            return undefined;
         }
-    );
+        // go ahead and create the new user
+        else {
+            User.register(
+                new User({username: req.body.username}),
+                req.body.password,
+                function (err, user) {
+                    if (err) {
+                        console.error(err);
+                        res.json({ success: false, message: "User is already registered" });
+                        return undefined;
+                    }
+                    res.json({ success: true, message: 'authentication succeeded', user: user.username });
+                }
+            );
+        }
+    })
 };
 
 // Go to login page
@@ -119,7 +106,7 @@ userController.doLoginReact = function (req, res, next) {
                 if (loginErr) {
                     return res.json({ success: false, message: loginErr })
                 }
-                return res.json({ success: true, message: "authentication succeeded" })
+                return res.json({ success: true, message: "authentication succeeded",  user: user.username })
             })
         }
     )(req, res, next);
