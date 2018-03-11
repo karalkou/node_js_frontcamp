@@ -27,6 +27,9 @@ router.post('/api/login', auth.doLoginReact);
 // route for logout action
 router.get('/logout', auth.logout);
 
+// route for logout action for react app
+router.get('/api/logout', auth.logoutReact);
+
 
 module.exports = router;
 /*----------------------------------------------------*/

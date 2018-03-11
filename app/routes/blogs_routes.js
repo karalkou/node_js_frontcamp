@@ -42,7 +42,7 @@ router.get(
     (req, res) => {
         BlogModel.find({})
             .then(blogs => {
-                res.send(blogs);
+                res.json(blogs);
             });
     });
 
@@ -88,7 +88,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 /**
- * PUTs update a blog instance
+ * DELETEs a blog instance
  */
 router.delete('/:id', (req, res, next) => {
     BlogModel.findByIdAndRemove(req.params.id)

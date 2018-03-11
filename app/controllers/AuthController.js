@@ -119,4 +119,11 @@ userController.logout = function (req, res) {
     res.redirect('/');
 };
 
+// logout
+userController.logoutReact = function (req, res) {
+    console.log('*** logoutReact');
+    req.logout();
+    return res.json({ success: true });
+};
+
 module.exports = userController;
