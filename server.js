@@ -45,6 +45,28 @@ app.listen(port, () => {
     console.log('We are live on ' + port);
 });
 
+// Allow requests from localhost:8000 and localhost:8080
+app.use(function(req, res, next) {
+    const origins = [
+        'http://localhost:8000',
+        'http://localhost:8080'
+    ];
+
+    for(let i = 0; i < origins.length; i++){
+        let origin = origins[i];
+
+        if(req.headers.origin.indexOf(origin) > -1){
+            res.header('Access-Control-Allow-Origin', req.headers.origin);
+        }
+    }
+
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+// set endpoints
 app.use('/', index);
 app.use('/blogs', blogs);
 app.use('/api/blogs', blogs);
